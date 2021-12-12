@@ -1,0 +1,63 @@
+@model IEnumerable<Lab7.Models.DataAccess.AcademicRecord>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Edit All </h1>
+
+
+
+@*<form asp-action="EditAll">*@
+@using (@Html.BeginForm("EditAll","AcademicRecords",FormMethod.Post)){
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<table class="table">
+    <thead>
+        <tr>            <th>
+                @*@Html.DisplayNameFor(model => model.CourseCodeNavigation)*@
+                <a href="?sort=course">Course</a>
+            </th>
+            <th>
+                <a href="?sort=student">@Html.DisplayNameFor(model => model.Student)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Grade)
+            </th>
+          
+        </tr>
+    </thead>
+    <tbody>
+
+    @for (int i = 0; i < Model.Count(); i++){
+        <tr>
+            <td>
+                            @*<input type="hidden" asp-for="@item.CourseCodeNavigation.Code" />*@
+                             @*@Html.HiddenFor(modelItem => item.CourseCodeNavigation.Code)*@
+                              @Html.HiddenFor(m => m.ToList()[i].CourseCodeNavigation.Code)
+                @Html.HiddenFor(m => m.ToList()[i].CourseCodeNavigation.Title)
+                              @Html.HiddenFor(m => m.ToList()[i].CourseCode)
+                @Html.DisplayFor(m => m.ToList()[i].CourseCodeNavigation.Code) -
+                @Html.DisplayFor(m => m.ToList()[i].CourseCodeNavigation.Title)
+            </td>
+            <td>
+                 @*<input type="hidden" asp-for="@item.Student.Id" />*@
+                  @Html.HiddenFor(m => m.ToList()[i].StudentId)
+                  @Html.HiddenFor(m => m.ToList()[i].Student.Id)
+                  @Html.HiddenFor(m => m.ToList()[i].Student.Name)
+                @Html.DisplayFor(m => m.ToList()[i].Student.Id) -
+                @Html.DisplayFor(m => m.ToList()[i].Student.Name)
+            </td>
+            <td>
+
+                @Html.EditorFor(m => m.ToList()[i].Grade, new { htmlAttributes = new { @class = "form-control smallsize", @style="color:navy" } })
+                @Html.ValidationMessageFor(m => m.ToList()[i].Grade, "", new { @class = "text-danger" })
+             </td>
+           
+        </tr>
+     
+}
+ <tr><td> <input type="submit" value="Save" class="btn btn-primary" /></td></tr>
+    </tbody>
+</table>
+
+}

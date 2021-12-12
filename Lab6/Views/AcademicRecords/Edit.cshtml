@@ -1,0 +1,63 @@
+﻿@model Lab6.Models.DataAccess.AcademicRecord
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>AcademicRecord</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <table>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Student.Name)
+                    </th>
+                    <td>
+                        <!-- 用 Display 只能從 queryString 取index按鈕跳網頁傳了的value 按鈕後 並無route 傳 所以 顯示名字消失!!!   所以設 hidden input 傳參數給控制器-->
+                        @*@Html.DisplayFor(model => model.Student.Id) -
+                        @Html.DisplayFor(model => model.Student.Name)*@
+                        @ViewData["StID"] - @ViewData["Name"]
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Course
+                    </th>
+                    <td>
+                        @ViewData["CourseCode"] - @ViewData["CourseTitle"]
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        <label asp-for="Grade" class="control-label"></label>
+                    </th>
+                    <td>
+                        <input asp-for="Grade" class="form-control" />
+                        <span asp-validation-for="Grade" class="text-danger"></span>
+                    </td>
+                </tr>
+
+            </table>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CourseCode" />
+            <input type="hidden" asp-for="StudentId" />
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

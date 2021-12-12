@@ -1,0 +1,63 @@
+﻿@model Lab6.Models.DataAccess.AcademicRecord
+
+@{
+    ViewData["Title"] = "Edit All";
+}
+
+<h1>Edit All</h1>
+
+<h4>AcademicRecord</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditAll">
+            <table>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a asp-route-sortBy="sortCourse">
+                                    Course
+                                </a>
+                            </th>
+                            <th>
+                                <a asp-route-sortBy="sortSt">
+                                    Student
+                                </a>
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Grade)
+
+                            </th>
+                            <th>
+                                <a asp-route-editAll="editAll">
+                                    Edit All
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+
+                </table>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="CourseCode" />
+            <input type="hidden" asp-for="StudentId" />
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Lab6.Models.DataAccess.Employee>
+    <!--- model list 也可以，controller return View(ToListAsync ) 此頁需要 for foreach 時需要 model list包資料庫-->
+<!---   不好調取DBA外 model List<Lab6.Models.EmployeeRoleSelections> 在控制器-->
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Employee Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID- Employee Name
+            </th>
+            <th>
+                Network ID (UserName) - PP
+            </th>
+            <th>
+                Job Title
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--  用 Foreach 不是 for-->
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id) -
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName) -
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @{ var role = string.Join(", ", item.EmployeeRoles.Select(x => x.Role.Role1).ToList()); }
+                    @role
+                    @*@Html.DisplayFor(modelItem => item)*@
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

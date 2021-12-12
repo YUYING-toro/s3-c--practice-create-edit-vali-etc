@@ -1,0 +1,51 @@
+﻿@model List<Lab6.Models.DataAccess.AcademicRecord>
+     <!-- return View(studentRecordContext.ToList()); 所以 不能是model IEnumerable 不然下面model 偵不到 -->
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Edit All </h1>
+<form asp-action="EditAll">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.CourseCodeNavigation)*@
+                    <a href="?sort=course">Course</a>
+                </th>
+                <th>
+                    <a href="?sort=student">Student</a>
+                </th>
+                <th>
+                    Grade
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <!---每筆內容 讀取return 出的Mode List 內 lAcademicRecords.Include(a => a.CourseCodeNavigation).Include(a => a.Student).AsQueryable()課紀錄表 學生表-->
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Model[i].CourseCode - @Model[i].CourseCodeNavigation.Title
+                        <input type="hidden" asp-for="@Model[i].CourseCode" />
+                    </td>
+                    <td>
+                        @Model[i].StudentId - @Model[i].Student.Name
+                        <input type="hidden" asp-for="@Model[i].StudentId" />
+                    </td>
+                    <td>
+                        <input asp-for="@Model[i].Grade" asp-route-courseId="@Model[i].CourseCode" asp-route-studentId="@Model[i].StudentId" class="form-control col-md-6" />
+                    </td>
+                    <td>
+                        <span asp-validation-for="@Model[i].Grade" class="text-danger"></span>
+                    </td>
+                </tr>
+            }
+            <tr><td> <input type="submit" value="Save" class="btn btn-primary" /></td></tr>
+        </tbody>
+    </table>
+
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
